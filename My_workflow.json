@@ -1,0 +1,218 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-700, -80],
+      "id": "2e033c5e-3429-4e2b-8e6a-499653be8e86",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "15EDagYTtiilISJPsO5M6F6VodnCXq9SepDNeVv_A50s",
+          "mode": "list",
+          "cachedResultName": "AI photography",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15EDagYTtiilISJPsO5M6F6VodnCXq9SepDNeVv_A50s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15EDagYTtiilISJPsO5M6F6VodnCXq9SepDNeVv_A50s/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [-480, -80],
+      "id": "f2ea0925-9032-442b-b16f-eeb99d3f9eba",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "oRei9kzcOYCBZTeB",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "49897efd-65cd-4224-bdb0-600d045435f3",
+              "name": "inputImageUrl",
+              "value": "={{ $json['Product image URL'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-260, -80],
+      "id": "d34409aa-6f96-4615-aec4-5be6db707ba3",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.inputImageUrl }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-40, -80],
+      "id": "4a271061-1e0d-41dc-91ae-b7d4c77bd6e8",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/upload/v1beta/files?key=AIzaSyAebz8x8j9AhfduMp2Ml0X7A04a6xaxHhs",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Goog-Upload-Command",
+              "value": "start, upload, finalize"
+            },
+            {
+              "name": "X-Goog-Upload-Header-Content-Type",
+              "value": "image/png"
+            },
+            {
+              "name": "Content-Type",
+              "value": "image/*"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "=data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [180, -80],
+      "id": "0a18d203-4dea-44d5-8d8e-9de750cdd1bf",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are the world’s greatest image analyzer. No one can interpret images with your precision and insight. I will provide you with an image of a product, and you must respond with a powerful, concise description in exactly 4 to 5 words. Focus on clarity, emotional impact, and relevance to the product’s visual and functional features. Make each word count. Here is the image:\n{{ $('Edit Fields').item.json.inputImageUrl }}",
+        "hasOutputParser": true,
+        "options": {
+          "passthroughBinaryImages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [400, -80],
+      "id": "27b65e34-904e-43f2-b989-bd8fc91f9ac5",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [440, 140],
+      "id": "7429a59f-a576-4464-a8be-e329d61524ed",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5ufkXyE6bYQqFui9",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3e2495f9-97cc-4fd7-9de5-0960a7d72a1f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "333156b7f38c6b848113fa6570daab35a66f7bc5f38c2ec1ceacea0e46ad637c"
+  },
+  "id": "MgQCVSFi7O6n5yQo",
+  "tags": []
+}
