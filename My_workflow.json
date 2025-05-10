@@ -1,6 +1,7 @@
 {
   "name": "My workflow",
   "nodes": [
+    
     {
       "parameters": {},
       "type": "n8n-nodes-base.manualTrigger",
