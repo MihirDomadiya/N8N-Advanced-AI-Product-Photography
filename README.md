@@ -22,7 +22,7 @@ This workflow is designed to simplify the process of transforming your product p
 To make sure you get the best results from this workflow, follow these instructions to set up the system properly:
 
 ### 1. **Create an n8n Account**
-Head over to [n8n.io](https://n8n.io) and **sign up** or **log in** to your n8n account. 
+Head over to [n8n.io](https://n8n.io) and **sign up** or **log in** to your n8n account.
 
 ### 2. **Import the Workflow**
 Once you're logged into your n8n account:
