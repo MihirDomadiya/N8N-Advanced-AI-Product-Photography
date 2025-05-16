@@ -25,7 +25,7 @@ To make sure you get the best results from this workflow, follow these instructi
 Head over to [n8n.io](https://n8n.io) and **sign up** or **log in** to your n8n account.
 
 ### 2. **Import the Workflow**
-Once you're logged into your n8n account:
+Once you're logged into your n8n account: 
 - Go to your **n8n dashboard**.
 - Click the **three dots (⋮)** in the top-right corner.
 - Select **"Import from file"** from the menu.
