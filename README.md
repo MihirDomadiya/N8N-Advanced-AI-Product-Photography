@@ -1,4 +1,4 @@
-# 🛍️ **Advanced AI Product Photography: Transform Your Products with Cutting-Edge AI** 📸🤖
+# 🛍️ **Advanced AI Product Photography: Transform Your Products with Cutting-Edge AI** 📸
 
 Welcome to the **Advanced AI Product Photography** project! 🚀 In this innovative workflow, we leverage the power of **n8n** and **AI-powered image manipulation** to revolutionize how you present your products. By simply uploading your product image, you will receive an enhanced, creative version that looks like it was shot by a professional photographer — perfect for e-commerce, marketing, or any high-quality visual need. 📷✨
 
